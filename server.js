@@ -1,5 +1,5 @@
 // Setup empty JS object to act as endpoint for all routes
-projectData = {};
+const projectData = { fname: "menna", age: 25, grad: true };
 
 // Require Express to run server and routes
 const express = require("express");
@@ -23,4 +23,9 @@ const server = app.listen(port, () => {
   console.log(`Server is running on port ${port}!`);
 });
 
-const apiKey = "9b39b9298db538b64692d635e2c61fce";
+// GET Route I: Server Side
+
+app.get("/data", (req, res) => {
+  res.send(projectData);
+  console.log(projectData);
+});

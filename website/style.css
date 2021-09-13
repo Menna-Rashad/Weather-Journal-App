@@ -45,6 +45,9 @@ body {
   flex-direction: column;
   gap: 20px;
 }
+.title {
+  margin-bottom: 20px;
+}
 /* #entryHolder {
 }
 
@@ -57,8 +60,6 @@ body {
 .holder {
 }
 
-.title {
-}
 
 #content {
 } 
