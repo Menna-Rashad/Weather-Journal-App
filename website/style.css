@@ -30,9 +30,6 @@ body {
   font-family: "Oswald", sans-serif;
 }
 
-.holder {
-}
-
 .entry {
   background: var(--cream);
   color: var(--charcoal);
@@ -48,7 +45,7 @@ body {
   flex-direction: column;
   gap: 20px;
 }
-#entryHolder {
+/* #entryHolder {
 }
 
 #date {
@@ -57,14 +54,19 @@ body {
 #temp {
 }
 
-#content {
+.holder {
 }
+
+.title {
+}
+
+#content {
+} 
+*/
 
 .headline {
   height: fit-content;
   grid-area: header;
-}
-.title {
 }
 
 /*  Basic Styling To Override Default For Basic HTML Elements */
