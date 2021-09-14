@@ -1,5 +1,5 @@
 // Setup empty JS object to act as endpoint for all routes
-const projectData = { fname: "menna", age: 25, grad: true };
+let projectData = {};
 
 // Require Express to run server and routes
 const express = require("express");
@@ -28,4 +28,14 @@ const server = app.listen(port, () => {
 app.get("/data", (req, res) => {
   res.send(projectData);
   console.log(projectData);
+});
+
+app.post("/data", (req, res) => {
+  // should post date, temp and content
+  projectData.date = req.body.date;
+  projectData.temp = req.body.temp;
+  projectData.content = req.body.content;
+  res.send({ msg: "data posted successfully" });
+  // because res.send("data posted..") led to an error (Error! SyntaxError: Unexpected token d in JSON at position 0)
+  console.log("server ", projectData);
 });

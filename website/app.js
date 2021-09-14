@@ -2,7 +2,8 @@
 
 // Create a new date instance dynamically with JS
 let d = new Date();
-let newDate = d.getMonth() + "." + d.getDate() + "." + d.getFullYear();
+// months are 0 indexed
+let newDate = d.getMonth() + 1 + "." + d.getDate() + "." + d.getFullYear();
 
 const apiKey = "9b39b9298db538b64692d635e2c61fce";
 const button = document.getElementById("generate");
@@ -20,15 +21,58 @@ const getData = async (url = "") => {
   }
 };
 
+// post Data method
+
+const postData = async (url = "", bodyData = {}) => {
+  const data = await fetch(url, {
+    method: "POST",
+    credentials: "same-origin",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(bodyData),
+  });
+
+  try {
+    const jData = await data.json();
+    console.log(jData);
+    return jData;
+  } catch (err) {
+    console.log("Error!", err);
+  }
+};
+
+// event listener to the generate button
+
 button.addEventListener("click", () => {
   const zip = document.querySelector("#zip").value;
-  if (zip === "") {
-    alert("please enter zip code");
+  const feelings = document.querySelector("#feelings").value;
+  if (zip === "" || feelings === "") {
+    alert("please enter zip code and your feeling");
   } else {
+    // get data frop weather api, post it in local server then get wanted data and change the ui
+
+    // from the open weather api
     getData(
       `https://api.openweathermap.org/data/2.5/weather?zip=${zip},&appid=${apiKey}`
-    );
-
-    getData("/data");
+    )
+      .then((data) => {
+        postData("/data", {
+          date: newDate,
+          temp: data.main.temp,
+          content: feelings,
+        });
+        //console.log("temp is", data.main.temp);
+      })
+      .then(async () => {
+        // GET Route II: Client Side
+        const finalData = await getData("/data");
+        console.log(finalData);
+        document.getElementById("date").innerHTML = `Date: ${finalData.date}`;
+        document.getElementById("temp").innerHTML = `Temp: ${finalData.temp}`;
+        document.getElementById(
+          "content"
+        ).innerHTML = `Content: ${finalData.content}`;
+      });
   }
 });
