@@ -47,14 +47,18 @@ const postData = async (url = "", bodyData = {}) => {
 button.addEventListener("click", () => {
   const zip = document.querySelector("#zip").value;
   const feelings = document.querySelector("#feelings").value;
-  if (zip === "" || feelings === "") {
-    alert("please enter zip code and your feeling");
+  if (
+    zip === "" ||
+    feelings === "" ||
+    !document.querySelector("input[name='unit']:checked")
+  ) {
+    alert("please enter zip code, your feeling and choose a unit");
   } else {
     // get data frop weather api, post it in local server then get wanted data and change the ui
-
     // from the open weather api
+    const unit = document.querySelector("input[name='unit']:checked").value;
     getData(
-      `https://api.openweathermap.org/data/2.5/weather?zip=${zip},&appid=${apiKey}`
+      `https://api.openweathermap.org/data/2.5/weather?zip=${zip},&appid=${apiKey}&units=${unit}`
     )
       .then((data) => {
         postData("/data", {
